@@ -37,32 +37,32 @@ void DO_NULL_STATE(FILE *pfIn,FILE *pfOut,enum STATE *state)
 			switch(second)
 			{
 			case '/':
-				fputc(first,pfOut);						/*Èç¹ûÊÇÁ½¸ö/£¬ÊÇcpp×´Ì¬,¶ÁÁ½¸ö/²¢½øÈëCPPº¯Êı*/
+				fputc(first,pfOut);						/*å¦‚æœæ˜¯ä¸¤ä¸ª/ï¼Œæ˜¯cppçŠ¶æ€,è¯»ä¸¤ä¸ª/å¹¶è¿›å…¥CPPå‡½æ•°*/
 				fputc(second,pfOut);
 				*state = CPP_STATE;
 				break;
 			case'*':
 				fputc(first,pfOut);
-				fputc('/',pfOut);						//Èç¹ûÊÇ/*ÊÇc×´Ì¬ ½øÈëC»»CPPº¯Êı
+				fputc('/',pfOut);						//å¦‚æœæ˜¯/*æ˜¯cçŠ¶æ€ è¿›å…¥Cæ¢CPPå‡½æ•°
 				*state = C_STATE;
 				break;
 			default:
-				fputc(first,pfOut);						//Èç¹ûµÚÒ»¸öÊÇ£¬µÚ¶ş¸ö²»ÊÇ£¬ÄÇ¾Í²»ÊÇc/cpp×´Ì¬£¬Á½¸ö¶¼Êä³ö
+				fputc(first,pfOut);						//å¦‚æœç¬¬ä¸€ä¸ªæ˜¯ï¼Œç¬¬äºŒä¸ªä¸æ˜¯ï¼Œé‚£å°±ä¸æ˜¯c/cppçŠ¶æ€ï¼Œä¸¤ä¸ªéƒ½è¾“å‡º
 				fputc(second,pfOut);	
 				break;
 			}
 		}	
 		break;
-	case EOF:											//Óöµ½ÎÄ¼ş½áÎ²£¬ÍË³ö
+	case EOF:											//é‡åˆ°æ–‡ä»¶ç»“å°¾ï¼Œé€€å‡º
 		*state = END_STATE;
 		break;
-	default:											//Èç¹ûÁ½¸ö¶¼²»ÊÇ£¬¼ûÉ¶Êä³öÉ¶
+	default:											//å¦‚æœä¸¤ä¸ªéƒ½ä¸æ˜¯ï¼Œè§å•¥è¾“å‡ºå•¥
 		fputc(first,pfOut);
 		break;
 	}
 }
 
-void DO_C_STATE(FILE *pfIn,FILE *pfOut,enum STATE *state)		//Èç¹ûÅĞ¶ÏÊÇCµÄ×¢ÊÍ£¬Òª×ªÎªCPP
+void DO_C_STATE(FILE *pfIn,FILE *pfOut,enum STATE *state)		//å¦‚æœåˆ¤æ–­æ˜¯Cçš„æ³¨é‡Šï¼Œè¦è½¬ä¸ºCPP
 {
 	int first = 0;
 	int second = 0;
@@ -79,11 +79,11 @@ void DO_C_STATE(FILE *pfIn,FILE *pfOut,enum STATE *state)		//Èç¹ûÅĞ¶ÏÊÇCµÄ×¢ÊÍ£¬
 			switch(third)
 			{
 			case '\n':
-				ungetc(third,pfIn);							//ÕâÀïÒªÅĞ¶ÏµÚÈı¸ö£¬Èç¹ûµÚÈı¸öÊÇ»»ĞĞ£¬ÔòÓ¦¸Ã·µ»ØµÚÈı¸ö£¬²¢ÇÒÖØĞÂµ÷ÓÃnull_state
+				ungetc(third,pfIn);							//è¿™é‡Œè¦åˆ¤æ–­ç¬¬ä¸‰ä¸ªï¼Œå¦‚æœç¬¬ä¸‰ä¸ªæ˜¯æ¢è¡Œï¼Œåˆ™åº”è¯¥è¿”å›ç¬¬ä¸‰ä¸ªï¼Œå¹¶ä¸”é‡æ–°è°ƒç”¨null_state
 				*state = NULL_STATE;
 				break;
 			default:	
-				fputc('\n',pfOut);							//Èç¹ûºóÃæÓĞ×Ö·ûÔòÏØ»»ĞĞ£¬ÔÙ°Ñ×Ö·û»»»ØÈ¥£¬µ÷NULL_STATE
+				fputc('\n',pfOut);							//å¦‚æœåé¢æœ‰å­—ç¬¦åˆ™å¿æ¢è¡Œï¼Œå†æŠŠå­—ç¬¦æ¢å›å»ï¼Œè°ƒNULL_STATE
 				ungetc(third,pfIn);
 				*state = NULL_STATE;
 				break;
@@ -97,7 +97,7 @@ void DO_C_STATE(FILE *pfIn,FILE *pfOut,enum STATE *state)		//Èç¹ûÅĞ¶ÏÊÇCµÄ×¢ÊÍ£¬
 		break;
 	case EOF:
 		break;
-	case '\n':												//Èç¹ûÊÇ»»ĞĞ£¬ÄÇÃ´»»ĞĞ²¢Ìí¼Ó//
+	case '\n':												//å¦‚æœæ˜¯æ¢è¡Œï¼Œé‚£ä¹ˆæ¢è¡Œå¹¶æ·»åŠ //
 		fputc('\n',pfOut);
 		fputc('/',pfOut);
 		fputc('/',pfOut);	
@@ -108,21 +108,21 @@ void DO_C_STATE(FILE *pfIn,FILE *pfOut,enum STATE *state)		//Èç¹ûÅĞ¶ÏÊÇCµÄ×¢ÊÍ£¬
 	}
 }
 
-void DO_CPP_STATE(FILE *pfIn,FILE *pfOut,enum STATE *state)			//cppµÄº¯Êı£¬ÕâÀï¾ÍÖ»¿¼ÂÇÊÇ·ñÎª»»ĞĞ»òÕßÎÄ¼ş½áÊø£¬
+void DO_CPP_STATE(FILE *pfIn,FILE *pfOut,enum STATE *state)			//cppçš„å‡½æ•°ï¼Œè¿™é‡Œå°±åªè€ƒè™‘æ˜¯å¦ä¸ºæ¢è¡Œæˆ–è€…æ–‡ä»¶ç»“æŸï¼Œ
 {	
 	int first = 0;
 	first = fgetc(pfIn);
 	switch (first)
 	{
-	case '\n':														//Èô¶ÁÈ¡µ½»»ĞĞ£¬¶ÁÒ»¸öÊäÒ»¸ö£¬×¢ÊÍ½áÊø£¬·µ»ØNULL_STATE£¬
+	case '\n':														//è‹¥è¯»å–åˆ°æ¢è¡Œï¼Œè¯»ä¸€ä¸ªè¾“ä¸€ä¸ªï¼Œæ³¨é‡Šç»“æŸï¼Œè¿”å›NULL_STATEï¼Œ
 		fputc(first,pfOut);
 		*state = NULL_STATE;
 		break;
 	case EOF:
-		*state = END_STATE;											//Èô¶Á²»µ½¶«Î÷£¬Ö±½Ó½áÊø¡£
+		*state = END_STATE;											//è‹¥è¯»ä¸åˆ°ä¸œè¥¿ï¼Œç›´æ¥ç»“æŸã€‚
 		break;
 	default:
-		fputc(first, pfOut);										//¶Áµ½³ıÁË»»ĞĞÈÎÒâ¶«Î÷£¬¶ÁÉ¶Êä³öÉ¶
+		fputc(first, pfOut);										//è¯»åˆ°é™¤äº†æ¢è¡Œä»»æ„ä¸œè¥¿ï¼Œè¯»å•¥è¾“å‡ºå•¥
 		break;
 	}
 }
